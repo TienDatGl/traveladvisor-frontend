@@ -9,6 +9,7 @@ const initialState = {
   avatar: "",
   address: "",
   phone: "",
+  is_superuser: false
 };
 
 export const userSlice = createSlice({
@@ -22,6 +23,7 @@ export const userSlice = createSlice({
       state.first_name = action.payload.user.first_name;
       state.last_name = action.payload.user.last_name;
       state.avatar = action.payload.user.avatar;
+      state.is_superuser = action.payload.user.is_superuser === true ? "ADMIN" : "USER"
     },
     logoutRedux: (state, action) => {
       state.email = "";
@@ -41,6 +43,7 @@ export const userSlice = createSlice({
         // state.id = action.payload.id
         state.last_name = action.payload.last_name;
         state.address = action.payload?.address;
+        state.isAdmin = action.payload.user.role === true ? "ADMIN" : "USER"
       }
     },
   },

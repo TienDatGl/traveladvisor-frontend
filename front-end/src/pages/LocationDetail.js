@@ -381,7 +381,7 @@ const LocationDetail = () => {
               <div className="flex flex-col">
                 <div className="mb-[8px] flex">
                   <div className="flex items-center text-[17px] font-[600]">
-                    {stars(review.id - 1)}
+                    {stars(review.id)}
                   </div>
                   <div className="mx-[8px] text-[14px] font-[400]">|</div>
                   <div className="text-[14px] font-[400] capitalize">

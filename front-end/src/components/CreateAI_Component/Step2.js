@@ -30,14 +30,14 @@ const Step2 = ({
 
   const today = new Date();
   const maxEndDate = startDate ? new Date(startDate) : today;
-  maxEndDate.setDate(maxEndDate.getDate() + 7);
+  maxEndDate.setDate(maxEndDate.getDate() + 2);
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
       <div className="flex w-full flex-col justify-start px-[1rem] pt-[70px] sm:px-[30rem]">
         <p className="text-[28px] font-bold">When do you want to go?</p>
         <p className="text-[16px] font-[400] text-[#757575]">
-          Choose a date range or length of stay, up to 7 days.
+          Choose a date range or length of stay, up to 3 days.
         </p>
         <div className="mt-[25px] w-full rounded-[50px] border px-[25px] py-[12px]">
           {calculateDayLength(startDate, endDate)} days

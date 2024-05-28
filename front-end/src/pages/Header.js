@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/img/Logo.png";
 import avt from "../assets/img/avt.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutRedux } from "../redux/userSlice";
 import toast from "react-hot-toast";
+import { MdAdminPanelSettings } from "react-icons/md";
 import {
   FaStar,
   FaBed,
@@ -23,6 +24,7 @@ import { IoBookmarksSharp } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 const Header = () => {
+
   const location = useLocation();
   const dispatch = useDispatch();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -30,6 +32,7 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showMenuMobile, setShowMenuMobile] = useState(false);
   const ref = useRef(null);
+  const navigate = useNavigate();
 
   const handleNavLinkClick = (path) => {
     setActiveLink(path);
@@ -50,16 +53,19 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logoutRedux());
+    navigate("/");
     toast.success("Logout successfully");
   };
 
   const userData = useSelector((state) => state.user);
-
+  console.log("userData la:", userData)
   const handleClickOutside = (event) => {
     if (showMenu && ref.current && !ref.current.contains(event.target)) {
       setShowMenu(false);
     }
   };
+  const isLogin = localStorage.getItem("accessToken");
+  // const isLogin = localstorage.getItem
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -101,6 +107,16 @@ const Header = () => {
               <FaPlane className="text-xl sm:mr-2" />{" "}
               <span className="hidden md:inline">Build Trip AI</span>
             </NavLink>
+            {/* Check isAdmin */}
+            {(userData.is_superuser === "ADMIN" && isLogin) && (
+              <NavLink
+                className={`mr-[32px] flex bg-transparent font-bold text-black ${activeLink === "/adminDB" ? "active-link" : ""} flex items-center leading-[84px]`}
+                to="/admin-dashboard/admin-DB"
+                onClick={() => handleNavLinkClick("/adminDB")}
+              >
+                <MdAdminPanelSettings className="mr-[10px] text-[19px]" /> Admin DashBoard
+              </NavLink>
+            )}
           </div>
 
           <NavLink to="/" className="flex items-center justify-center">
@@ -234,6 +250,16 @@ const Header = () => {
                 <FaPlane className="mr-2 text-xl" />{" "}
                 <span className="inline">Build Trip AI</span>
               </NavLink>
+              {/* Check isAdmin */}
+              {userData.is_superuser === "ADMIN" && (
+                <NavLink
+                  className={`flex bg-transparent text-black ${activeLink === "/adminDB" ? "active-link" : ""} flex items-center leading-[24px]`}
+                  to="/admin-dashboard"
+                  onClick={() => handleNavLinkClick("/adminDB")}
+                >
+                  <MdAdminPanelSettings className="mr-[10px] text-[19px]" /> Admin DashBoard
+                </NavLink>
+              )}
               <NavLink to="userprofile" className="flex items-center">
                 <FaUser className="mr-2 h-4 w-4" /> My account
               </NavLink>

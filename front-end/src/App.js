@@ -4,6 +4,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import RootLayout from "../src/layouts/RootLayout";
 import { Home } from "./pages/Home";
 import { SignUp } from "./pages/SignUp";
@@ -20,7 +21,17 @@ import MessengerCustomerChat from "react-messenger-customer-chat";
 import AiTripCreate from "./pages/AiTripCreate";
 import AITripResult from "./pages/AITripResult";
 
+
+// ADMIN IMPORT
+import Admin from "./components/Admin/Admin";
+import AdminDashBoardTemplate from "./components/Admin/DashBoardContent/AdminDashBoardTemplate";
+import AdminManageLocations from "./components/Admin/DashBoardContent/AdminManageLocations";
+import AdminManageLocationDetail from "./components/Admin/DashBoardContent/AdminManageLocationDetail/AdminManageLocationDetail";
+import AdminManageUsers from "./components/Admin/DashBoardContent/AdminManageUsers/AdminManageUsers";
+import AdminCategoryManage from "./components/Admin/DashBoardContent/AdminManageTrips/AdminManageTrips";
+
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import SubscriptionPlan from "./pages/SubscriptionPlan";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +41,13 @@ const router = createBrowserRouter(
       <Route path="login" element={<Login />} />
       <Route path="aboutus" element={<AboutUs />} />
       <Route path="contactus" element={<ContactUs />} />
+      <Route path="admin-dashboard/" element={<Admin />}>
+        <Route index path="admin-DB" element={<AdminDashBoardTemplate />} />
+        <Route index path="manage-locations" element={<AdminManageLocations />} />
+        <Route index path="manage-location/:filterby" element={<AdminManageLocationDetail />} />
+        <Route index path="manage-trips" element={<AdminCategoryManage />} />
+        <Route index path="manage-users" element={<AdminManageUsers />} />
+      </Route>
       <Route path="detail/:filterby" element={<LocationDetail />} />
       <Route path="/" element={<ProtectedRoute />}>
         <Route path="userprofile" element={<UserProfile />} />
@@ -39,6 +57,7 @@ const router = createBrowserRouter(
         <Route path="mytripdetail/:filterby" element={<SingleMytrip />} />
         <Route path="tripcreateAI" element={<AiTripCreate />} />
         <Route path="tripresultAI" element={<AITripResult />} />
+        <Route path="UpgradePremium" element={< SubscriptionPlan />}></ Route>
       </Route>
     </Route>,
   ),
