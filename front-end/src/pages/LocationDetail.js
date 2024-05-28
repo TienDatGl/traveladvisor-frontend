@@ -43,7 +43,7 @@ const LocationDetail = () => {
   const locationDisplay = locationDetail.filter(
     (location) => location.id === parseInt(filterby),
   )[0];
-  dispatch(getLocationDetail(locationDisplay))
+  dispatch(getLocationDetail(locationDisplay));
   const [currentDate, setCurrentDate] = useState("");
   useEffect(() => {
     const today = new Date();
@@ -91,7 +91,6 @@ const LocationDetail = () => {
         console.error("Error:", error);
         alert("Failed to submit review"); // Optionally alert the user
       });
-
   };
 
   const stars = (reviewId) => {
@@ -138,7 +137,7 @@ const LocationDetail = () => {
 
   return (
     <div className="">
-      <div className="mt-8 px-4 sm:mx-5 sm:px-2 md:mx-4 md:px-3 lg:mx-8 lg:px-8">
+      <div className="mt-8 px-[1rem] sm:mx-5 sm:px-[20rem]">
         {/* Title */}
         <div className="justify-between md:flex lg:flex">
           {/* Title : Left Conent */}

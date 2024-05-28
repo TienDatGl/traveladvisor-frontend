@@ -30,7 +30,7 @@ const Step2 = ({
 
   const today = new Date();
   const maxEndDate = startDate ? new Date(startDate) : today;
-  maxEndDate.setDate(maxEndDate.getDate() + 7);
+  maxEndDate.setDate(maxEndDate.getDate() + 2);
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
@@ -52,6 +52,7 @@ const Step2 = ({
               id="start-date"
               selected={startDate}
               onChange={handleStartDateChange}
+              minDate={today}
               className="rounded-md border px-4 py-2"
             />
           </div>

@@ -123,8 +123,11 @@ export const tripSlice = createSlice({
       state.tempLocations = [...action.payload];
     },
     getLocationDetail: (state, action) => {
-      state.markerList = [action.payload]
-    }
+      state.markerList = [action.payload];
+    },
+    resetLocation: (state, action) => {
+      state.items = [];
+    },
   },
 });
 
@@ -139,7 +142,8 @@ export const {
   getLocationArray,
   storeTempLocations,
   setTripDatabyAI,
-  getLocationDetail
+  getLocationDetail,
+  resetLocation,
 } = tripSlice.actions;
 
 export default tripSlice.reducer;

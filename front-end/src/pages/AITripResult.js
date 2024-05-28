@@ -5,6 +5,7 @@ import Typist from "react-typist";
 import {
   MdOutlineKeyboardArrowUp,
   MdOutlineKeyboardArrowDown,
+  MdBreakfastDining,
 } from "react-icons/md";
 import { IoCloseOutline } from "react-icons/io5";
 import { FaLocationDot, FaRegStar, FaStar } from "react-icons/fa6";
@@ -12,7 +13,11 @@ import { useNavigate } from "react-router-dom";
 import { RxPencil2 } from "react-icons/rx";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setTripDatabyAI, getLocationArray } from "../redux/tripSlice";
+import {
+  setTripDatabyAI,
+  getLocationArray,
+  resetLocation,
+} from "../redux/tripSlice";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -23,6 +28,12 @@ import { IoRestaurantSharp } from "react-icons/io5";
 import { TiLocationArrow } from "react-icons/ti";
 import { BiSolidHotel } from "react-icons/bi";
 import { CiAirportSign1 } from "react-icons/ci";
+import { FaRegAddressBook } from "react-icons/fa";
+import imgReplace from "../assets/img/hoian.jpg";
+import { IoWifi } from "react-icons/io5";
+import { RiParkingBoxLine } from "react-icons/ri";
+import { MdOutlineFreeBreakfast } from "react-icons/md";
+import { TbFileDescription } from "react-icons/tb";
 
 const AITripResult = () => {
   const initialData = useSelector((state) => state.tripCreate);
@@ -156,6 +167,7 @@ const AITripResult = () => {
         if (dataRes.message) {
           toast.success(dataRes.message);
           navigate("/");
+          dispatch(resetLocation());
         } else if (dataRes.error) {
           toast.error(dataRes.error);
         }
@@ -169,39 +181,77 @@ const AITripResult = () => {
 
   const RecommendedHotelSlider = ({ hotels }) => {
     return (
-      <div className="mb-[24px] min-h-[480px] border-b pb-[24px]">
+      <div className="mb-[40px] border-b pb-[24px]">
         <h2>Places to stay</h2>
         <p className="opacity-[70%]">
           We've also recommended some places to stay during your trip.
         </p>
         <Slider {...settings} className="mt-6">
           {hotels.map((hotel, index) => (
-            <div
-              key={index}
-              style={{ display: "flex" }}
-              className="mr-[10px] rounded-[12px] border-[1px] border-[#ccc] p-4"
-            >
-              <div className="flex gap-[15px]">
-                <img
-                  src={hotel.image}
-                  alt={hotel.name}
-                  className="hotel-image h-[200px] w-[200px] rounded-lg shadow-md"
-                />
-                <div className="flex flex-col gap-[5px]">
-                  <p className="mb-2 font-semibold sm:text-[25px]">
-                    {hotel.name}
-                  </p>
-                  <p>{hotel.address}</p>
-                  <div className="mb-[15px] flex items-center text-[18px] font-[600]">
-                    <div className="mr-[5px] flex">{stars(5)}</div> 230 reviews
+            <div key={index} className="flex p-2 sm:p-4">
+              <div className="flex flex-col gap-[15px] rounded-[12px] border-[1px] border-[#ccc] p-4">
+                <div className="flex gap-[15px]">
+                  {hotel.image ? (
+                    <img
+                      src={hotel.image}
+                      alt={hotel.name}
+                      className="hotel-image h-[100%] w-[45%] rounded-lg"
+                    />
+                  ) : (
+                    <img
+                      src={imgReplace}
+                      alt={hotel.name}
+                      className="hotel-image h-[100%] w-[45%] rounded-lg"
+                    />
+                  )}
+                  <div className="flex flex-col gap-[8px]">
+                    <div className="text-[16px] font-semibold sm:text-[18px]">
+                      {hotel.name}
+                    </div>
+                    <div className="flex items-center text-[13px] font-[600] sm:text-[14px]">
+                      <div className="mr-[5px] flex">{stars(5)}</div> 23 reviews
+                    </div>
+                    <div className="flex items-center text-[13px] sm:text-[14px]">
+                      <FaRegAddressBook className="mr-[4px] text-[16px] sm:text-[19px]" />
+                      {hotel.address}
+                    </div>
+                    <div className="flex items-center text-[13px] sm:text-[14px]">
+                      <BiSolidHotel className="mr-[4px] text-[16px] sm:text-[20px]" />
+                      {hotel.category.name} • $$$
+                    </div>
+                    <div className="flex items-center text-[13px] sm:text-[14px]">
+                      <CiAirportSign1 className="mr-[4px] text-[16px] sm:text-[20px]" />
+                      {hotel.airport_distance} km to airport
+                    </div>
                   </div>
-                  <div className="flex">
-                    <BiSolidHotel className="mr-[4px] text-[20px]" />
-                    {hotel.category.name} • $$$
+                </div>
+                <div className="h-[1px] w-full bg-[#ccc]"></div>
+                <div className="flex flex-col gap-[10px]">
+                  <div className="mb-[-10px] flex gap-[5px]">
+                    <span className="flex items-center gap-1 text-[14px]">
+                      <MdOutlineFreeBreakfast className="text-[16px]" />
+                      Free breakfast
+                    </span>
+                    <span className="flex items-center gap-1 text-[14px]">
+                      {" "}
+                      <RiParkingBoxLine className="text-[16px]" />
+                      Free parking
+                    </span>
                   </div>
-                  <div className="flex">
-                    <CiAirportSign1 className="mr-[4px] text-[20px]" />
-                    {hotel.airport_distance} km from the airport
+                  <span className="flex items-center gap-1 text-[14px]">
+                    <IoWifi className="text-[16px]" />
+                    Free High Speed Internet (WiFi)
+                  </span>
+                  <div className="flex gap-2">
+                    <TbFileDescription className="h-[30px] text-[60px]" />
+                    <div className="text-[14px]">
+                      Charming hotel boasting polite, friendly staff, and
+                      excellent service. Centrally located with clean rooms,
+                      ocean views, and delightful breakfast options. Rooftop
+                      pool and bar offer stunning vistas. Free airport shuttle
+                      with amenities for added convenience. A luxurious and
+                      comfortable stay.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -297,11 +347,18 @@ const AITripResult = () => {
                               </h4>
                               {showDes[index] && (
                                 <div className="mb-[16px]">
-                                  <img
-                                    className="mb-[12px] h-[230px] w-[100%] rounded-[12px]"
-                                    src={location.image}
-                                  ></img>
-                                  <p className="mb-[4px] flex items-center text-[23px] font-[640] hover:cursor-pointer hover:underline">
+                                  {location.image ? (
+                                    <img
+                                      className="mb-[12px] h-[230px] w-[100%] rounded-[12px]"
+                                      src={location.image}
+                                    ></img>
+                                  ) : (
+                                    <img
+                                      className="mb-[12px] h-[230px] w-[100%] rounded-[12px]"
+                                      src={imgReplace}
+                                    ></img>
+                                  )}
+                                  <p className="mb-[4px] flex items-center font-[640] hover:cursor-pointer hover:underline sm:text-[23px]">
                                     {location.name}
                                   </p>
                                   <div className="mb-[15px] flex items-center text-[18px] font-[600]">

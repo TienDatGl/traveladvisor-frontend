@@ -21,6 +21,7 @@ import { SlNote } from "react-icons/sl";
 import { FaBook } from "react-icons/fa";
 import { IoBookmarksSharp } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FaChevronDown } from "react-icons/fa";
 
 const Header = () => {
   const location = useLocation();
@@ -55,9 +56,16 @@ const Header = () => {
 
   const userData = useSelector((state) => state.user);
 
+  const [showTripsMenu, setShowTripsMenu] = useState(false);
+
+  const handleShowTripsMenu = () => {
+    setShowTripsMenu((prev) => !prev);
+  };
+
   const handleClickOutside = (event) => {
-    if (showMenu && ref.current && !ref.current.contains(event.target)) {
+    if (ref.current && !ref.current.contains(event.target)) {
       setShowMenu(false);
+      setShowTripsMenu(false);
     }
   };
 
@@ -82,25 +90,44 @@ const Header = () => {
               className={`mr-4 flex h-full items-center border-b-[3px] border-transparent md:mr-8 ${activeLink === "/" ? "border-black" : ""}`}
               onClick={() => handleNavLinkClick("/")}
             >
-              <FaBed className="text-xl sm:mr-2" />{" "}
+              <FaBed className="text-xl sm:mr-2" />
               <span className="hidden md:inline">Finds Stays</span>
             </NavLink>
-            <NavLink
-              to="/tripcreate"
-              className={`mr-4 hidden h-full items-center border-b-[3px] border-transparent sm:flex md:mr-8 ${activeLink === "/tripcreate" ? "border-black" : ""}`}
-              onClick={() => handleNavLinkClick("/tripcreate")}
-            >
-              <FaStar className="text-xl sm:mr-2" />{" "}
-              <span className="hidden md:inline">My Trip</span>
-            </NavLink>
-            <NavLink
-              to="/tripcreateAI"
-              className={`mr-4 hidden h-full items-center border-b-[3px] border-transparent sm:flex md:mr-8 ${activeLink === "/tripcreateAI" ? "border-black" : ""}`}
-              onClick={() => handleNavLinkClick("/tripcreateAI")}
-            >
-              <FaPlane className="text-xl sm:mr-2" />{" "}
-              <span className="hidden md:inline">Build Trip AI</span>
-            </NavLink>
+            <div className="relative mr-4 flex h-full items-center md:mr-8">
+              <div
+                className={`flex cursor-pointer items-center ${activeLink === "/tripcreate" || activeLink === "/tripcreateAI" ? "border-black" : ""}`}
+                onClick={handleShowTripsMenu}
+              >
+                <FaPlane className="text-xl sm:mr-2" />
+                <span className="hidden md:inline">Trips</span>
+                <FaChevronDown className="ml-1 text-sm" />
+              </div>
+              {showTripsMenu && (
+                <div className="absolute top-full z-10 mt-2 w-[15rem] rounded-md bg-white p-[1rem] shadow-lg">
+                  <NavLink
+                    to="/tripcreate"
+                    className="block px-[0.5rem] py-2 text-black hover:bg-gray-100"
+                    onClick={() => handleNavLinkClick("/tripcreate")}
+                  >
+                    Create a new trip
+                  </NavLink>
+                  <NavLink
+                    to="/tripcreateAI"
+                    className="block px-[0.5rem] py-2 text-black hover:bg-gray-100"
+                    onClick={() => handleNavLinkClick("/tripcreateAI")}
+                  >
+                    Create a new trip with AI
+                  </NavLink>
+                  <NavLink
+                    to="/mytrip"
+                    className="block px-[0.5rem] py-2 text-black hover:bg-gray-100"
+                    onClick={() => handleNavLinkClick("/mytrip")}
+                  >
+                    View my trips
+                  </NavLink>
+                </div>
+              )}
+            </div>
           </div>
 
           <NavLink to="/" className="flex items-center justify-center">
@@ -114,7 +141,7 @@ const Header = () => {
             </span>
           </NavLink>
 
-          <div className="hidden w-1/3 items-center justify-end md:flex">
+          <div className="hidden items-center justify-end md:flex">
             <div className="flex items-center text-lg font-bold">
               <FaHeart className="mr-2" /> Favourites
             </div>
@@ -208,6 +235,7 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu */}
+          {/* Mobile Menu */}
           {isMobileMenuOpen && (
             <div className="absolute right-[4%] top-[6%] z-10 flex w-[50%] flex-col space-y-2 rounded-md bg-white p-4 shadow-lg">
               <NavLink
@@ -215,41 +243,72 @@ const Header = () => {
                 className={`mr-4 flex h-full items-center border-b-[3px] border-transparent md:mr-8`}
                 onClick={() => handleNavLinkClick("/")}
               >
-                <FaBed className="mr-2 text-xl" />{" "}
+                <FaBed className="mr-2 text-xl" />
                 <span className="inline">Finds Stays</span>
               </NavLink>
-              <NavLink
-                to="/tripcreate"
-                className={`mr-4 flex h-full items-center border-b-[3px] border-transparent md:mr-8`}
-                onClick={() => handleNavLinkClick("/tripcreate")}
-              >
-                <FaStar className="mr-2 text-xl" />{" "}
-                <span className="inline">My Trip</span>
-              </NavLink>
-              <NavLink
-                to="/tripcreateAI"
-                className={`mr-4 flex h-full items-center border-b-[3px] border-transparent md:mr-8`}
-                onClick={() => handleNavLinkClick("/tripcreateAI")}
-              >
-                <FaPlane className="mr-2 text-xl" />{" "}
-                <span className="inline">Build Trip AI</span>
-              </NavLink>
-              <NavLink to="userprofile" className="flex items-center">
-                <FaUser className="mr-2 h-4 w-4" /> My account
-              </NavLink>
-              <NavLink to="/" className="flex items-center">
-                <FaWallet className="mr-2 h-4 w-4" /> Payment
-              </NavLink>
-              <NavLink to="/" className="flex items-center">
-                <FaGear className="mr-2 h-4 w-4" /> Settings
-              </NavLink>
-              <div
-                className="flex cursor-pointer items-center hover:text-red-600"
-                onClick={handleLogout}
-              >
-                <IoLogOut className="mr-2 h-5 w-5" />
-                Log out
+              <div className="flex flex-col">
+                <div
+                  className="flex cursor-pointer items-center"
+                  onClick={handleShowTripsMenu}
+                >
+                  <FaPlane className="mr-2 text-xl" />
+                  <span className="inline">Trips</span>
+                  <FaChevronDown className="ml-1 text-sm" />
+                </div>
+                {showTripsMenu && (
+                  <div className="flex flex-col pl-[1.8rem]">
+                    <NavLink
+                      to="/tripcreate"
+                      className="mt-2 text-black hover:bg-gray-100"
+                      onClick={() => handleNavLinkClick("/tripcreate")}
+                    >
+                      Create new trip
+                    </NavLink>
+                    <NavLink
+                      to="/tripcreateAI"
+                      className="mt-2 text-black hover:bg-gray-100"
+                      onClick={() => handleNavLinkClick("/tripcreateAI")}
+                    >
+                      Create new AI trip
+                    </NavLink>
+                    <NavLink
+                      to="/mytrip"
+                      className="mt-2 text-black hover:bg-gray-100"
+                      onClick={() => handleNavLinkClick("/mytrip")}
+                    >
+                      View my trips
+                    </NavLink>
+                  </div>
+                )}
               </div>
+              {userData.email ? (
+                <>
+                  <NavLink to="userprofile" className="flex items-center">
+                    <FaUser className="mr-2 h-4 w-4" /> My account
+                  </NavLink>
+                  <NavLink to="/" className="flex items-center">
+                    <FaWallet className="mr-2 h-4 w-4" /> Payment
+                  </NavLink>
+                  <NavLink to="/" className="flex items-center">
+                    <FaGear className="mr-2 h-4 w-4" /> Settings
+                  </NavLink>
+                  <div
+                    className="flex cursor-pointer items-center hover:text-red-600"
+                    onClick={handleLogout}
+                  >
+                    <IoLogOut className="mr-2 h-5 w-5" />
+                    Log out
+                  </div>
+                </>
+              ) : (
+                <div className="flex items-center">
+                  <NavLink to="login">
+                    <button className="mr-2 flex items-center rounded-md border border-black px-4 py-2 text-lg hover:opacity-70">
+                      Log in
+                    </button>
+                  </NavLink>
+                </div>
+              )}
             </div>
           )}
         </div>

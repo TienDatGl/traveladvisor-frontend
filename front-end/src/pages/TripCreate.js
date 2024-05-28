@@ -20,6 +20,8 @@ const TripCreate = () => {
 
   const initialData = useSelector((state) => state.tripCreate);
 
+  console.log("initialData Trip create page", initialData);
+
   const formatDateTripInfo = (input) => {
     const date = new Date(input);
     const options = { month: "short", day: "numeric" };
