@@ -100,10 +100,10 @@ const AdminDashBoardTemplate = () => {
             </text>
         )
     }
+    console.log("TRIP DATA RESULT", tripsData.results)
 
     function countTripsByUser(trips) {
         const tripCount = {};
-
         trips.forEach(trip => {
             if (trip.user in tripCount) {
                 tripCount[trip.user]++;
@@ -115,7 +115,8 @@ const AdminDashBoardTemplate = () => {
         return tripCount;
     }
 
-    const tripCountByUser = countTripsByUser(tripsData.results);
+    const tripCountByUser = tripsData.results && countTripsByUser(tripsData.results);
+
     console.log(tripCountByUser)
 
     useEffect(() => {
@@ -213,7 +214,7 @@ const AdminDashBoardTemplate = () => {
 
             {/* TRANSACTIONS */}
             <div className="h-[24rem] bg-white p-4 rounded-sm border border-gray-200 flex flex-col flex-1 mr-4 ml-4">
-                <strong className="text-gray-700 font-medium">Transactions</strong>
+                <strong className="text-gray-700 font-medium">Analyze results</strong>
                 <div className="mt-3 w-full flex-1 text-xs">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart
@@ -307,7 +308,7 @@ const AdminDashBoardTemplate = () => {
 
             {/* RECENT TRIP CREATED */}
             <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-700 flex-1 ml-4 mr-4">
-                <strong className="text-gray-700 font-medium">Recent Orders</strong>
+                <strong className="text-gray-700 font-medium">Recent Trip created</strong>
                 <div className="border-gray-200 rounded-sm mt-3">
                     <table className="w-full text-gray-700 ">
                         <thead className="text-xs text-white uppercase bg-gray-50 dark:bg-gray-700 px-4">

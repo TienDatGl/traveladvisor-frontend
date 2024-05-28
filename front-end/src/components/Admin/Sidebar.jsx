@@ -58,17 +58,6 @@ const Sidebar = ({ image, collapsed, rtl, toggled, handleToggleSidebar }) => {
                             <Link to="/admin-dashboard/admin-DB" />
                         </MenuItem>
                     </Menu>
-
-                    <Menu iconShape="circle">
-                        <MenuItem
-                            icon={<FaUser />}
-                        // suffix={<span className="badge red">new</span>}
-                        >
-                            Manage trips
-                            <Link to="/admin-dashboard/manage-trips" />
-                        </MenuItem>
-                    </Menu>
-
                     <Menu iconShape="circle">
                         <MenuItem
                             icon={<FaPlaneDeparture />}
@@ -86,16 +75,6 @@ const Sidebar = ({ image, collapsed, rtl, toggled, handleToggleSidebar }) => {
                         >
                             Manage Locations
                             <Link to="/admin-dashboard/manage-locations" />
-                        </MenuItem>
-                    </Menu>
-
-                    <Menu iconShape="circle">
-                        <MenuItem
-                            icon={<FaComments />}
-                        // suffix={<span className="badge red">new</span>}
-                        >
-                            Manage Comments
-                            <Link to="#" />
                         </MenuItem>
                     </Menu>
                 </SidebarContent>

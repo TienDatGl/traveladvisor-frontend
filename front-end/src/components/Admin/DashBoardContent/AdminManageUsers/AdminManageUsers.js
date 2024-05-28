@@ -11,7 +11,7 @@ const AdminManageUsers = () => {
 
             const token = localStorage.getItem("accessToken");
             const getLocations = async () => {
-                const response = await axios.get(`http://localhost:8000/users/`, {
+                const response = await axios.get(`https://admin.traveladvisor.io.vn/backend/users/`, {
                     headers: {
                         "Content-Type": "application/json",
                         // Authorization: `Bearer ${token}`,
@@ -78,7 +78,7 @@ const AdminManageUsers = () => {
                                 return (
                                     <>
                                         <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
                                                 {user.email}
                                             </th>
                                             <td class="px-6 py-4">
@@ -91,7 +91,7 @@ const AdminManageUsers = () => {
                                                 {user.username}
                                             </td>
                                             <td class="px-6 py-4">
-                                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{user.id}</a>
+                                                <a href="#" class="font-medium text-white hover:underline ">{user.id}</a>
                                             </td>
                                         </tr>
                                     </>
